@@ -2,7 +2,7 @@
 
 Pip & Paw is a frontend pet supply shop for dogs and cats. Its nine products are organized around walking, playing, eating, and resting. The shop uses local product images and a typed catalog, so it can run without an API or account credentials.
 
-**Team repository** · [AmjadYounis7/ecommercepet](https://github.com/AmjadYounis7/ecommercepet)
+**Team repository** · [AmjadYounis7/1q](https://github.com/AmjadYounis7/1q)
 
 ## Run the project
 
