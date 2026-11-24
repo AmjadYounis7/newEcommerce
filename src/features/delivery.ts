@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 // Keep the field definitions and validation together for consistent labels and error placement.
 export const fields = [
   { name: 'name', label: 'Full name', autoComplete: 'name', type: 'text' },
@@ -32,22 +34,44 @@ export const blankDelivery: Delivery = {
   city: '',
 };
 
+const phoneError = 'Enter a phone number with 7 to 15 digits.';
+
+const deliverySchema = z.object({
+  name: z.string().trim().refine(
+    (name) => name.length >= 2,
+    'Enter your full name (at least 2 characters).',
+  ),
+  email: z.string().trim().regex(
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    'Enter a valid email address.',
+  ),
+  phone: z.string().trim()
+    .regex(/^\+?[\d\s().-]+$/, phoneError)
+    .refine((phone) => {
+      const digitCount = phone.replace(/\D/g, '').length;
+      return digitCount >= 7 && digitCount <= 15;
+    }, phoneError),
+  address: z.string().trim().refine(
+    (address) => address.length >= 5,
+    'Enter your street and building details.',
+  ),
+  city: z.string().trim().refine(
+    (city) => city.length >= 2,
+    'Enter your city or town.',
+  ),
+});
+
 export function validateDelivery(data: Delivery): Errors {
+  const result = deliverySchema.safeParse(data);
+  if (result.success) return {};
+
+  const { fieldErrors } = z.flattenError(result.error);
   const errors: Errors = {};
-  if (data.name.trim().length < 2)
-    errors.name = 'Enter your full name (at least 2 characters).';
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()))
-    errors.email = 'Enter a valid email address.';
-  const digits = data.phone.replace(/\D/g, '');
-  if (
-    !/^\+?[\d\s().-]+$/.test(data.phone.trim()) ||
-    digits.length < 7 ||
-    digits.length > 15
-  ) {
-    errors.phone = 'Enter a phone number with 7 to 15 digits.';
+
+  for (const { name } of fields) {
+    const message = fieldErrors[name]?.[0];
+    if (message) errors[name] = message;
   }
-  if (data.address.trim().length < 5)
-    errors.address = 'Enter your street and building details.';
-  if (data.city.trim().length < 2) errors.city = 'Enter your city or town.';
+
   return errors;
 }
