@@ -1,5 +1,5 @@
 :root {
-  font-family: 'Geist Variable', Arial, sans-serif;
+  font-family: "Geist Variable", Arial, sans-serif;
   color: #233b30;
   background: #fcfbf6;
   --ink: #193f30;
@@ -9,7 +9,7 @@
   --line: #d9ded1;
   --orange: #b04e28;
   --serif:
-    'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -101,6 +101,8 @@ select {
   border-bottom: 1px solid var(--line);
   background: var(--paper);
   z-index: 4;
+  position: sticky;
+  top: 0;
 }
 .header-inner {
   display: grid;
@@ -126,7 +128,7 @@ select {
   display: block;
   margin-top: 6px;
   font:
-    650 0.55rem/1 'Geist Variable',
+    650 0.55rem/1 "Geist Variable",
     sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.24em;
@@ -163,8 +165,8 @@ select {
   font-weight: 530;
   position: relative;
 }
-.nav a[aria-current='page']::after {
-  content: '';
+.nav a[aria-current="page"]::after {
+  content: "";
   height: 2px;
   width: 100%;
   background: var(--orange);
@@ -759,7 +761,7 @@ select {
 .fields > div:nth-child(4) {
   grid-column: 1 / -1;
 }
-input[aria-invalid='true'] {
+input[aria-invalid="true"] {
   border-color: #a4392c;
 }
 .error {
